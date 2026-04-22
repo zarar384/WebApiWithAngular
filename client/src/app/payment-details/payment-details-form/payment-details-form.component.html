@@ -1,0 +1,70 @@
+<form novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+  <input type="hidden" name="paymentDetailId" [value]="service.formData.paymentDetailId" />
+
+  <div class="form-group">
+    <label>CARD OWNER NAME</label>
+    <input type="text"
+           class="form-control form-control-lg"
+           placeholder="Full Name"
+           name="cardOwnerName"
+           #cardOwnerName="ngModel"
+           [(ngModel)]="service.formData.cardOwnerName"
+           (input)="onlyText($event,'cardOwnerName')"
+           required
+           maxlength="50"
+           pattern="^[A-Za-z ]+$"
+           [class.invalid]="cardOwnerName.invalid && cardOwnerName.touched">
+  </div>
+
+  <div class="form-group">
+    <label>CARD NUMBER</label>
+    <input type="text"
+           class="form-control form-control-lg"
+           placeholder="16 digits"
+           name="cardNumber"
+           #cardNumber="ngModel"
+           [(ngModel)]="service.formData.cardNumber"
+           (input)="onlyNumber($event,'cardNumber',16)"
+           required
+           maxlength="16"
+           [class.invalid]="cardNumber.invalid && cardNumber.touched">
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>SECURITY CODE</label>
+      <input type="text"
+             class="form-control form-control-lg"
+             placeholder="3 or 4 digits"
+             name="securityCode"
+             #securityCode="ngModel"
+             [(ngModel)]="service.formData.securityCode"
+             (input)="onlyNumber($event,'securityCode',4)"
+             required
+             maxlength="4"
+             [class.invalid]="securityCode.invalid && securityCode.touched">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>VALID THROUGH</label>
+      <input type="text"
+             class="form-control form-control-lg"
+             placeholder="MM/YY"
+             name="expirationDate"
+             #expirationDate="ngModel"
+             [(ngModel)]="service.formData.expirationDate"
+             (input)="formatDate($event)"
+             required
+             maxlength="5"
+             [class.invalid]="expirationDate.invalid && expirationDate.touched">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-info btn-lg btn-block"
+            type="submit"
+            [disabled]="form.invalid">
+      SUBMIT
+    </button>
+  </div>
+</form>
